@@ -6,16 +6,17 @@ SRC = src/main.cpp \
       src/entities/Player.cpp
 
 game: $(SRC)
-	$(CXX) $(CXXFLAGS) $(SRC) -o game
+	@$(CXX) $(CXXFLAGS) $(SRC) -o game
 
 tests/test_entity_player: tests/test_entity_player.cpp \
                           src/entities/Entity.cpp \
                           src/entities/Player.cpp
-	$(CXX) $(CXXFLAGS) $^ -o tests/test_entity_player
+	@$(CXX) $(CXXFLAGS) $^ -o tests/test_entity_player
 
 tests: tests/test_entity_player
-	@echo "--- test_entity_player ---"
+	@echo --- test_entity_player ---
 	@./tests/test_entity_player
 
 clean:
-	rm -f game tests/test_entity_player
+#     linux / git bash: rm -f game.exe tests/test_entity_player.exe
+	@del /f /q game.exe tests\test_entity_player.exe

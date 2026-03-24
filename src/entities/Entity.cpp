@@ -16,6 +16,7 @@ void Entity::takeDamage(int amount) {
 }
 
 void Entity::heal(int amount) {
+    if (!alive) return;
     currentHP += amount;
     if (currentHP > maxHP) {
         currentHP = maxHP;
@@ -25,6 +26,7 @@ void Entity::heal(int amount) {
 void Entity::printStatus() const {
     std::cout << "Name: " << name << std::endl;
     std::cout << "HP: " << currentHP << std::endl;
+    std::cout << "Attack: " << attackPower << std::endl;
 }
 
 bool Entity::isAlive() const {
