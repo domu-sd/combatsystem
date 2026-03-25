@@ -4,7 +4,6 @@
 #include "../src/entities/Enemy.h"
 
 int main() {
-
     Enemy enemy("Goblin King", 100, 15, "Goblin");
 
     std::cout << "Test 2.1: Enemy creation...";
@@ -27,6 +26,6 @@ int main() {
     assert(enemy.isAlive() == false);
     std::cout << " PASS\n";
 
-    std::cout << "All of Test 2 passed.\n";
+    std::cout << "All of Test 2 passed.\n\n";
     return 0;
 }
