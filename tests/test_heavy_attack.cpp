@@ -10,7 +10,7 @@ int main() {
     HeavyAttack heavyHit(0);
     HeavyAttack heavyMiss(100);
 
-    std::cout << "Test 4.1: Player does heavy attack on Goblin";
+    std::cout << "Test 4.1: Player does heavy attack on Goblin...";
     assert(player.getName() == "Hero");
     assert(player.getCurrentHP() == 100);
     assert(player.getAttackPower() == 15);
@@ -26,19 +26,19 @@ int main() {
     assert(enemy.getCurrentHP() == 10);
     std::cout << " PASS\n";
 
-    std::cout << "Test 4.2: Goblin does heavy attack on Player";
+    std::cout << "Test 4.2: Goblin does heavy attack on Player...";
     heavyHit.execute(enemy, player);
     assert(player.getCurrentHP() == 70);
     assert(enemy.getCurrentHP() == 10);
     assert(player.isAlive() == true);
     std::cout << " PASS\n";
 
-    std::cout << "Test 4.3: Player misses heavy attack on Goblin";
+    std::cout << "Test 4.3: Player misses heavy attack on Goblin...";
     heavyMiss.execute(player, enemy);
     assert(enemy.getCurrentHP() == 10);
     assert(enemy.isAlive() == true);
 
-    std::cout << "Test 4.3: Dead Entity cannot attack";
+    std::cout << "Test 4.3: Dead Entity cannot attack...";
     heavyHit.execute(player, enemy);
     assert(enemy.getCurrentHP() == 0);
     assert(enemy.isAlive() == false);
@@ -47,7 +47,7 @@ int main() {
     assert(player.isAlive() == true);
     std::cout << " PASS\n";
 
-    std::cout << "Test 4.4: Attacking dead entity does nothing";
+    std::cout << "Test 4.4: Attacking dead entity does nothing...";
     heavyHit.execute(player, enemy);
     assert(enemy.getCurrentHP() == 0);
     assert(enemy.isAlive() == false);

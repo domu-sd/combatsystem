@@ -11,3 +11,7 @@ to run tests:
 
 delete compiled files:
 - make clean
+
+# refactor
+move heal charges to Entity instead of player
+
