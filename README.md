@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # C++ Turn-Based Combat Simulator
 
 A turn-based combat simulator built in C++17 as a portfolio project targeting game studio internships. Designed to demonstrate clean OOP architecture, polymorphic game systems, and software engineering best practices including TDD and CI/CD.
@@ -66,3 +67,22 @@ The project follows a clean separation of concerns:
 - **`Action`** — abstract interface for all combat actions; adding a new action requires no changes to `Entity` or `GameEngine`
 - **`GameEngine`** — owns the game loop, player/enemy turns, and rendering
 - **`LevelLoader`** — static factory methods that return pre-configured levels
+=======
+# combatsystem
+Built to explore scalable game architecture and real-time combat systems
+
+# notes
+to compile and run:
+- make game
+- ./game.exe
+
+to run tests:
+- make tests
+
+delete compiled files:
+- make clean
+
+# refactor
+move heal charges to Entity instead of player
+
+>>>>>>> 1d4a909d66c6887cb8ee7529cebcd3ca61e7de1c
