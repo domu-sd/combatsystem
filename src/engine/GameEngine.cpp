@@ -162,7 +162,7 @@ void GameEngine::run() {
         renderState();
         if (checkGameEnd()) {
             if (!player.isAlive()) {
-                std::cout << "=== GAME OVER. YOU LOSE ===\n";
+                std::cout << "=== YOU LOSE ===\n";
             } else {
                 std::cout << "=== VICTORY ===\n";
             }
