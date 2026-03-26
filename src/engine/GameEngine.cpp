@@ -11,10 +11,12 @@ GameEngine::GameEngine(Player player, std::vector<Enemy> enemies)
 }
 
 void GameEngine::printEnemyList() {
-    for (int i = 0; i < (int)enemies.size(); i++) {
-        if (enemies[i].isAlive()) {
-            std::cout << i + 1 << ". " << enemies[i].getName()
-                      << " (HP: " << enemies[i].getCurrentHP() << ")\n";
+    int aliveIndex = 1;
+    for (Enemy& enemy : enemies) {
+        if (enemy.isAlive()) {
+            std::cout << aliveIndex << ". " << enemy.getName()
+                      << " (HP: " << enemy.getCurrentHP() << ")\n";
+            aliveIndex++;
         }
     }
 }
@@ -32,25 +34,13 @@ void GameEngine::renderState() {
 }
 
 bool GameEngine::checkGameEnd() {
-    if (!player.isAlive()) {
-        std::cout << "=== GAME OVER — YOU LOST ===\n";
-        return true;
-    }
+    if (!player.isAlive()) return true;
 
-    bool allDead = true;
     for (Enemy& enemy : enemies) {
-        if (enemy.isAlive()) {
-            allDead = false;
-            break;
-        }
+        if (enemy.isAlive()) return false;
     }
 
-    if (allDead) {
-        std::cout << "=== VICTORY ===\n";
-        return true;
-    }
-
-    return false;
+    return true;
 }
 
 void GameEngine::processTurn() {
@@ -89,20 +79,50 @@ void GameEngine::processTurn() {
             }
         }
 
+        // Map choice to nth alive enemy
+        int aliveIndex = 0;
+        Enemy* target = nullptr;
+        for (Enemy& e : enemies) {
+            if (e.isAlive()) {
+                aliveIndex++;
+                if (aliveIndex == targetChoice) {
+                    target = &e;
+                    break;
+                }
+            }
+        }
+
+        std::cout << "-------------------------\n";
+
         if (actionNum == 1) {
             BasicAttack attack;
             std::cout << player.getName() << " uses Basic Attack!\n";
-            attack.execute(player, enemies[targetChoice - 1]);
+            attack.execute(player, *target);
+            if (target->getCurrentHP() <= 0) {
+                std::cout << target->getName() << " has died!\n";
+            } else {
+                std::cout << target->getName() << " is now " << target->getCurrentHP() << " HP\n";
+            }
         } else {
             HeavyAttack attack;
             std::cout << player.getName() << " uses Heavy Attack!\n";
-            attack.execute(player, enemies[targetChoice - 1]);
+            bool hit = attack.execute(player, *target);
+            if (!hit) {
+                std::cout << "Heavy Attack missed!\n";
+            } else if (target->getCurrentHP() <= 0) {
+                std::cout << target->getName() << " has died!\n";
+            } else {
+                std::cout << target->getName() << " is now " << target->getCurrentHP() << " HP\n";
+            }
         }
     } else if (actionNum == 3) {
         Heal heal;
         std::cout << player.getName() << " uses Heal!\n";
         heal.execute(player, player);
+        std::cout << player.getName() << " is now " << player.getCurrentHP() << " HP\n";
     }
+
+    std::cout << "-------------------------\n";
 
     // Enemy turn
     std::mt19937 gen(std::random_device{}());
@@ -117,11 +137,19 @@ void GameEngine::processTurn() {
             BasicAttack attack;
             std::cout << enemy.getName() << " uses Basic Attack!\n";
             attack.execute(enemy, player);
+            std::cout << player.getName() << " is now " << player.getCurrentHP() << " HP\n";
         } else {
             HeavyAttack attack;
             std::cout << enemy.getName() << " uses Heavy Attack!\n";
-            attack.execute(enemy, player);
+            bool hit = attack.execute(enemy, player);
+            if (!hit) {
+                std::cout << enemy.getName() << "'s Heavy Attack missed!\n";
+            } else {
+                std::cout << player.getName() << " is now " << player.getCurrentHP() << " HP\n";
+            }
         }
+
+        std::cout << "-------------------------\n";
     }
 }
 
@@ -133,7 +161,12 @@ void GameEngine::run() {
         processTurn();
         renderState();
         if (checkGameEnd()) {
+            if (!player.isAlive()) {
+                std::cout << "=== GAME OVER. YOU LOSE ===\n";
+            } else {
+                std::cout << "=== VICTORY ===\n";
+            }
             break;
-        };
+        }
     }
 }

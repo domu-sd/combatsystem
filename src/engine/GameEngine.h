@@ -17,4 +17,7 @@ public:
     void run();
 
     void printEnemyList();
+
+    Player& getPlayer() { return player; }
+    std::vector<Enemy>& getEnemies() { return enemies; }
 };

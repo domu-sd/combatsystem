@@ -4,6 +4,6 @@
 
 class BasicAttack : public Action {
     public:
-    void execute(Entity& actor, Entity& target) override;
+    bool execute(Entity& actor, Entity& target) override;
     std::string getName() const override;
 };

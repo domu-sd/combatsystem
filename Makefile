@@ -8,7 +8,8 @@ SRC = src/main.cpp \
 	  src/actions/BasicAttack.cpp \
 	  src/actions/HeavyAttack.cpp \
 	  src/actions/Heal.cpp \
-	  src/engine/GameEngine.cpp
+	  src/engine/GameEngine.cpp \
+	  src/levels/LevelLoader.cpp
 
 game: $(SRC)
 	@$(CXX) $(CXXFLAGS) $(SRC) -o game
@@ -44,18 +45,31 @@ tests/test_heal: tests/test_heal.cpp \
 						  src/actions/Heal.cpp
 	@$(CXX) $(CXXFLAGS) $^ -o tests/test_heal
 
+tests/test_game_engine: tests/test_game_engine.cpp \
+						  src/entities/Entity.cpp \
+                          src/entities/Player.cpp \
+                          src/entities/Enemy.cpp \
+						  src/actions/Heal.cpp \
+						  src/actions/BasicAttack.cpp \
+						  src/actions/HeavyAttack.cpp \
+						  src/engine/GameEngine.cpp \
+						  src/levels/LevelLoader.cpp
+	@$(CXX) $(CXXFLAGS) $^ -o tests/test_game_engine
+
 TEST_BINS = tests/test_entity_player \
 			tests/test_entity_enemy \
 			tests/test_basic_attack \
 			tests/test_heavy_attack \
-			tests/test_heal
+			tests/test_heal \
+			tests/test_game_engine
 
 BINS = 	game.exe \
 		tests\test_entity_player.exe \
 		tests\test_entity_enemy.exe \
 		tests\test_basic_attack.exe \
 		tests\test_heavy_attack.exe \
-		tests\test_heal.exe
+		tests\test_heal.exe \
+		tests\test_game_engine.exe
 
 tests: $(TEST_BINS)
 	@echo TEST 1: -- test_entity_player ---
@@ -68,6 +82,8 @@ tests: $(TEST_BINS)
 	@./tests/test_heavy_attack
 	@echo TEST 5: --- test_heal ---
 	@./tests/test_heal
+	@echo TEST 5: --- test_game_engine ---
+	@./tests/test_game_engine
 
 clean:
 #     linux / git bash: rm -f $(BINS)
