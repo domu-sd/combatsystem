@@ -7,7 +7,8 @@ SRC = src/main.cpp \
 	  src/entities/Enemy.cpp \
 	  src/actions/BasicAttack.cpp \
 	  src/actions/HeavyAttack.cpp \
-	  src/actions/Heal.cpp
+	  src/actions/Heal.cpp \
+	  src/engine/GameEngine.cpp
 
 game: $(SRC)
 	@$(CXX) $(CXXFLAGS) $(SRC) -o game
